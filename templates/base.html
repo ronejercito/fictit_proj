@@ -12,7 +12,7 @@
 
 		<!-- Theme CSS -->
 		<link type="text/css" href="{% static 'css/argon-design-system.css' %}" rel="stylesheet">
-
+		<link type="text/css" href="{% static 'css/fictit.css' %}" rel="stylesheet">
 
         {% render_block "css" %}
         {% if request.toolbar %}
@@ -25,7 +25,7 @@
     </head>
     <body>
         {% cms_toolbar %}
-        {% include 'tools/toolbar_temp.html' %}
+        {% include 'tools/menunavbar_template.html' %}
         {% block content %}{% endblock content %}
         
         {% render_block "js" %}
