@@ -1,0 +1,11 @@
+<div>
+	<p>
+	Hello, 
+	{% if request.user.is_authenticated %}
+		{{ request.user }}!
+	{% else %}
+		Guest!
+	{% endif %}
+	</p>
+</div>
+	

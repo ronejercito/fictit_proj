@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'djangocms_googlemap',
     'djangocms_snippet',
     'djangocms_style',
+
+    'authoring.apps.AuthoringConfig',
 ]
 
 SITE_ID = 1
