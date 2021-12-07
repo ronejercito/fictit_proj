@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n static cms_tags sekizai_tags menu_tags %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In Hello" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row m-5">
+    <div class="col d-flex justify-content-center">
+      <div class="w-50 border border-3 rounded-2 p-3">
+		<h1>{% trans "Account Inactive" %}</h1>
+
+		<p>{% trans "This account is inactive." %}</p>
+	  </div>
+	</div>
+  </div>
+</div>
+{% endblock %}

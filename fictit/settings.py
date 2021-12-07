@@ -57,6 +57,12 @@ INSTALLED_APPS = [
     'djangocms_snippet',
     'djangocms_style',
 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    
+    'integrations.apps.IntegrationsConfig',
+    'userprofile.apps.UserprofileConfig',
     'authoring.apps.AuthoringConfig',
 ]
 
@@ -80,6 +86,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'fictit.urls'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 TEMPLATES = [
     {
@@ -172,6 +183,9 @@ X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 CMS_TEMPLATES = [
     ('main/home.html', 'Home page template'),
+    # ('main/storyindex.html', 'Stories Index'),
+    # ('main/story.html', 'Story'),
+    # ('main/storypage.html', 'Story Page'),
 ]
 
 THUMBNAIL_HIGH_RESOLUTION = True
@@ -183,3 +197,18 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters'
 )
 
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+ACCOUNT_USERNAME_BLACKLIST = []
+ACCOUNT_USERNAME_MIN_LENGTH = 3

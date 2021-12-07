@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load i18n static cms_tags sekizai_tags menu_tags %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row m-5">
+    <div class="col d-flex justify-content-center">
+      <div class="w-50 border border-3 rounded-2 p-3">
+        <h1>{% trans "Sign Up" %}</h1>
+
+        <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          <div class="mb-3 d-flex justify-content-center">
+            <table class="table-borderless">
+              <tr class="my-2">
+                <td class="float-end">{{ form.email.label }}:</td>
+                <td>{{ form.email }}</td>
+              </tr>
+              <tr class="my-2">
+                <td class="float-end">{{ form.email2.label }}:</td>
+                <td>{{ form.email2 }}</td>
+              </tr>
+              <tr class="my-2">
+                <td class="float-end">{{ form.username.label }}:</td>
+                <td>{{ form.username }}</td>
+              </tr>
+              <tr class="my-2">
+                <td class="float-end">{{ form.password1.label }}:</td>
+                <td>{{ form.password1 }}</td>
+              </tr>
+              <tr class="my-2">
+                <td class="float-end">{{ form.password2.label }}:</td>
+                <td>{{ form.password2 }}</td>
+              </tr>
+            </table>
+          </div>
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <div class="d-flex justify-content-end mx-3">
+            <button type="submit" class="btn btn-primary">{% trans "Sign Up" %} &raquo;</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

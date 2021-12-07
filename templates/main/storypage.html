@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags static %}
+
+{% block head_title %}{% page_attribute "page_title" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            {% placeholder "content" %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

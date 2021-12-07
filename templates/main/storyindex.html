@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags static %}
+
+{% block head_title %}{% page_attribute "page_title" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            <p>Start</p>
+            {# {% placeholder "content" %} #}
+            {% for story in request.current_page.get_descendants %}
+                {{ story.get_page_title }}
+            {% endfor %}
+            {{ request.current_page.get_descendants }}
+            <p>End</p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -24,6 +24,18 @@
 	    {% endif %}
     </head>
     <body>
+    	<div class="container-fluid">
+    		<div class="bg-white d-flex justify-content-end">
+    			<div class="mx-3">
+    				{% if request.user.is_authenticated %}
+    				    <a href="{% url 'account_logout' %}"><button class="btn btn-link text-reset">Logout</button></a> 
+    				{% else %}
+    					<a href="{% url 'account_login' %}"><button class="btn btn-link text-reset">Login</button></a> 
+    				{% endif %}
+    				
+    			</div>
+    		</div>
+    	</div>
         {% cms_toolbar %}
         {% include 'tools/menunavbar_template.html' %}
         {% block content %}{% endblock content %}

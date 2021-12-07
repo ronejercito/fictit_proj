@@ -2,13 +2,14 @@ from django.contrib import admin
 from cms.extensions import PageExtensionAdmin
 
 # Register your models here.
-from .models import Story, StoryPage
+from .models import Story, StoryPage, StoryOwner
 
-class StoryExtensionAdmin(PageExtensionAdmin):
-	pass
+# class StoryExtensionAdmin(PageExtensionAdmin):
+# 	pass
 
-class StoryPageExtensionAdmin(PageExtensionAdmin):
-	pass
+# class StoryPageExtensionAdmin(PageExtensionAdmin):
+# 	pass
 
-admin.site.register(Story, StoryExtensionAdmin)
-admin.site.register(StoryPage, StoryPageExtensionAdmin)
+admin.site.register(Story)
+admin.site.register(StoryPage)
+admin.site.register(StoryOwner)

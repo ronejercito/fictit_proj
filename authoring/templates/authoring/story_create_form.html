@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load sekizai_tags menu_tags static %}
+
+{% block content %}
+<div class="container">
+	<div class="row m-3">
+		<div class="col">
+			<div>
+				STORY CREATE FORM
+				<form method="post">
+					{% csrf_token %}
+				    {{ form.as_p }}
+				    {{ form }}
+				    <input type="submit" value="Save" class="btn btn-primary">
+				    <button class="btn btn-danger">
+				    	Cancel
+				    </button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+			

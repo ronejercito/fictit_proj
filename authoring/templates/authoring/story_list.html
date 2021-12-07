@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load sekizai_tags menu_tags %}
+
+{% block content %}
+    
+
+<div class="container">
+	<div class="row m-3">
+		<div class="col">
+			<div><h1>Stories</h1></div>
+			<div>
+				<ul>
+				{% for story in story_list %}
+				    <li>{{ story.title }}</li>
+				{% empty %}
+				    <li>No stories yet.</li>
+				{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
