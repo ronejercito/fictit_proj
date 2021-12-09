@@ -20,8 +20,11 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('story/', include('authoring.urls')),
+
     path('accounts/', include('allauth.urls')),
     path('profile/', include('userprofile.urls')),
+
     path('admin/', admin.site.urls),
     # re_path(r'^authoring/', include('authoring.urls')),
     re_path(r'^', include('cms.urls')),

@@ -4,8 +4,8 @@ from .views import StoryIndexView, StoryCreateView, StoryDetailView
 app_name='author'
 
 urlpatterns = [
-	re_path('', StoryIndexView.as_view(), name='story_index'),
-	re_path('create/', StoryCreateView.as_view(), name='story_create'),
+	path('', StoryIndexView.as_view(), name='story_index'),
+	path('create/', StoryCreateView.as_view(), name='story_create'),
 	# re_path('story/', include([
 	# 	re_path('create/', StoryCreateView.as_view(), name='story_create'),
 	# 	re_path('<slug:storyslug>/', include([

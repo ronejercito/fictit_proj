@@ -1,11 +1,16 @@
 from django.conf import settings
 from django.db import models
 from userprofile.models import Profile
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+# from django_currentuser.middleware import get_current_authenticated_user
+    
 
 # Create your models here.
 class Story(models.Model):
 	title = models.CharField(max_length=250, null=True, blank=True)
 	authors = models.ManyToManyField(Profile, through='StoryOwner')
+	started_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='started_by', verbose_name='Started by')
 
 	def __str__(self):
 		return '%s' % (self.title)
@@ -18,8 +23,20 @@ class StoryOwner(models.Model):
 	story = models.ForeignKey(Story, on_delete=models.CASCADE)
 	user = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
+	class Meta:
+		unique_together = ['story', 'user']
+		verbose_name = 'Story Owner'
+		verbose_name_plural = 'Story Owners'
+
 	def __str__(self):
 		return '%s-%s' % (self.story.title, str(self.user))
+
+	@receiver(post_save, sender=Story)
+	def add_author(sender, instance, created, **kwargs):
+		if created:
+			user = instance.started_by
+			StoryOwner.objects.create(story=instance, user=user)
+
 
 class StoryPage(models.Model):
 	title = models.CharField(max_length=250, null=True, blank=True)
