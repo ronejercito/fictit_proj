@@ -1,7 +1,8 @@
+from django.utils.text import slugify
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 
 from .forms import StoryForm
 
@@ -26,9 +27,12 @@ class StoryCreateView(CreateView):
 			cd = form.cleaned_data
 			new_story = form.save(commit=False)
 			new_story.started_by = Profile.objects.get(user=request.user)
+			new_story.slug = slugify(new_story.title)
 			new_story.save()
-		return redirect(request.path) #Go to StoryDetailView prepopulated with Story details
+		return redirect(reverse('author:story_detail', kwargs={'storyslug':new_story.slug}))
 
 class StoryDetailView(DetailView):
 	model = Story
 	template_name = 'authoring/story_detail.html'
+	fields = ['title', 'started_by']
+	slug_url_kwarg = 'storyslug'

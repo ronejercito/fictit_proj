@@ -3,21 +3,32 @@ from django.db import models
 from userprofile.models import Profile
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.utils.text import slugify
 # from django_currentuser.middleware import get_current_authenticated_user
     
 
 # Create your models here.
 class Story(models.Model):
 	title = models.CharField(max_length=250, null=True, blank=True)
+	subtitle = models.CharField(max_length=250, null=True, blank=True)
+	synopsis = models.TextField(max_length=500, null=True, blank=True)
 	authors = models.ManyToManyField(Profile, through='StoryOwner')
 	started_by = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True, related_name='started_by', verbose_name='Started by')
-
-	def __str__(self):
-		return '%s' % (self.title)
+	slug = models.SlugField(null=True, blank=True)
 
 	class Meta:
 		verbose_name = 'Story'
 		verbose_name_plural = 'Stories'
+
+	def __str__(self):
+		return '%s' % (self.title)
+
+	def get_absolute_url(self):
+		return reverse('story', kwargs={'slug':self.slug})
+
+	def save(self, *args, **kwargs):
+		self.slug = self.slug or slugify(self.title)
+		super(Story, self).save(*args, **kwargs)
 
 class StoryOwner(models.Model):
 	story = models.ForeignKey(Story, on_delete=models.CASCADE)
@@ -44,6 +55,7 @@ class StoryPage(models.Model):
 	challenge = models.BooleanField(default=False, null=True, blank=True)
 	start = models.BooleanField(default=False, null=True, blank=True)
 	end = models.BooleanField(default=False, null=True, blank=True)
+	slug = models.SlugField(null=True, blank=True)
 
 	def __str__(self):
 		return '%s' % (self.title)

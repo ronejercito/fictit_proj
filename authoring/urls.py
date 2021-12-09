@@ -6,12 +6,9 @@ app_name='author'
 urlpatterns = [
 	path('', StoryIndexView.as_view(), name='story_index'),
 	path('create/', StoryCreateView.as_view(), name='story_create'),
-	# re_path('story/', include([
-	# 	re_path('create/', StoryCreateView.as_view(), name='story_create'),
-	# 	re_path('<slug:storyslug>/', include([
-	# 		re_path('detail/', StoryDetailView.as_view(), name='story_detail'),
-	# 		# re_path('update/', StoryUpdateView.as_view(), name='story_update'),
-	# 		# re_path('delete/', StoryDeleteView.as_view(), name='story_delete'),
-	# 	])),
-	# ])),
+	path('<slug:storyslug>/', include([
+		path('detail/', StoryDetailView.as_view(), name='story_detail'),
+		# re_path('update/', StoryUpdateView.as_view(), name='story_update'),
+		# re_path('delete/', StoryDeleteView.as_view(), name='story_delete'),
+	])),
 ]
