@@ -1,6 +1,6 @@
 from django.db import models
 from cms.models import CMSPlugin
-from authoring.models import Story, StoryOwner
+from authoring.models import Story, StoryOwner, StoryPage
 
 # Create your models here.
 class StoryPluginModel(CMSPlugin):
@@ -14,3 +14,9 @@ class StoryOwnerPluginModel(CMSPlugin):
 
 	def __str__(self):
 		return self.storyowner
+
+class StoryPagePluginModel(CMSPlugin):
+	storypage =models.ForeignKey(StoryPage, on_delete=models.CASCADE)
+
+	def __str__(self):
+		return self.storypage.title

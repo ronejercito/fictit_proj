@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load sekizai_tags menu_tags static %}
+
+{% block extra_head %}
+    
+{% endblock extra_head %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-3">L Margin</div>
+		<div class="col-6 margin-scroll">
+			<div class="row">
+				<div class="col">
+					<div>
+						<h4>Story Page</h4>
+						<form method="post" class="border rounded">
+							{% csrf_token %}
+							<div class="d-flex flex-column p-3">
+								Page title
+								{{ form.title }}
+							</div>
+
+							<div class="d-flex flex-column p-3">
+								Page text
+								{{ form.text }}
+							</div>
+						    
+						    <div class="d-flex flex-row justify-content-between border rounded m-3 py-2 px-3">
+						    	<div>
+						    		Add a challenge on this page:
+									{{ form.challenge }}
+						    	</div>
+								<div>
+						    		Story starts on this page:
+									{{ form.start }}
+						    	</div>
+						    	<div>
+						    		Story ends here:
+									{{ form.end }}
+						    	</div>
+						    	<div>
+						    		Publish this page:
+									{{ form.publish }}
+						    	</div>
+							</div>
+							<div class="d-flex justify-content-end p-3">
+								<input type="submit" value="Save" class="btn btn-primary">
+							    <a href="{% url 'author:story_detail' storyslug=request.resolver_match.kwargs.storyslug %}" class="btn btn-danger">Cancel</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			{% if request.resolver_match.view_name == 'author:storypage_update' %}
+			<div class="row p-3">
+				<div class="col border rounded">
+					<h4>Story Path</h4>
+					<span class="w-100">
+						<div class="d-flex flex-column">
+							{% if paths|length > 0 %}
+							    {% for path in paths %}
+								<div class="m-2 p-2 border rounded row justify-content-between">
+									<div class="col-11 d-flex align-items-center">
+
+										<div class="col-11 d-flex align-items-center">
+											{% if path.correct %}
+											<i class="bi bi-check"></i>
+											{% endif %}
+											<strong>{{ path.storypath }}</strong>
+										</div>
+										{% if path.correct %}
+										<div class="col-1 d-flex align-items-center">
+											[Correct]
+										</div>    
+										{% endif %}
+									</div>
+									<div class="col-1">
+										<form action="{% url 'author:storypath_delete' storyslug=request.resolver_match.kwargs.storyslug storypageslug=request.resolver_match.kwargs.storypageslug pk=path.id %}" method="post" class="align-items-center p-0 m-0">{% csrf_token %}
+											<div class="d-flex align-items-center justify-content-end">
+												<input type="submit" value="&times;" class="btn btn-outline-danger p-2 px-3">
+											</div>
+												
+										</form>
+									</div>
+								</div>	
+								{% endfor %}
+							{% else %}
+							    {% if form.end.value %}
+							        Cannot add path to an ending.
+							    {% else %}
+							        Add a path.
+							    {% endif %}
+							{% endif %}
+						</div>
+					</span>
+					<span class="w-100">
+						<div class="d-flex justify-content-end m-1 my-3">
+							<a href="{{ storypage.get_absolute_url }}" data-modal-title="{{ storypage.title }}" data-modal-url="{% url 'author:storypage_detail_add_path' storyslug=request.resolver_match.kwargs.storyslug storypageslug=request.resolver_match.kwargs.storypageslug %}" data-toggle="modal" data-target="#storyPathModal" class="{% if form.end.value %}btn disabled{% else %}btn btn-primary{% endif %}">Add Path</a>
+						</div>
+					</span>
+				</div>
+					
+			</div>    
+			{% endif %}
+		</div>
+		<div class="col-3 margin-scroll">
+			{% include '../tools/storypage_right_margin.html' %}
+		</div>
+	</div>
+		
+</div>
+{% endblock content %}
+
+
+{% if request.resolver_match.view_name == 'author:storypage_update' %}
+    
+{% block extra_body %}
+<div class="modal fade" id="storyPathModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	{% include 'authoring/modals/add_path.html' %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock extra_body %}
+
+{% endif %}
+
+
+{% comment "optional note" %}
+NEEDS INDEPENDENT SCROLL FOR EACH DIV SECTION
+USE OVERFLOW: AUTO; IN CSS
+
+{% endcomment %}

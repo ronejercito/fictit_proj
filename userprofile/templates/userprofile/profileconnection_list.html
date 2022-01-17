@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container">
+	<h1>Connections</h1>
+
+	<ul>
+	{% for connection in connections %}
+	    <li>{{ connection.contact }}</li>
+	{% empty %}
+	    <li>No connections.</li>
+	{% endfor %}
+	</ul>
+	<a href="{% url 'profile:profileconnection_create' user %}" class="btn btn-link">Connect</a>
+	{% endblock %}
+</div>
+	

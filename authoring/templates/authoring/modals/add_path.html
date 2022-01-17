@@ -1,0 +1,24 @@
+{% if request.resolver_match.view_name == 'author:storypage_update' %}
+<div>
+	<div class="mx-2">
+		<div class="border rounded w-100 p-2">
+			<form method="post" action="{% url 'author:storypath_create' storyslug=view.kwargs.storyslug storypageslug=view.kwargs.storypageslug %}">
+				{% csrf_token %}
+				<div class="m-2">
+					Story Path
+					{{ addpath_form.storypath }}
+				</div>
+				
+				<div class="m-2">
+					Correct path?
+					{{ addpath_form.correct }}
+				</div>
+					
+				<div class="d-flex justify-content-end m-2">
+					<input type="submit" value="Add" class="btn btn-primary">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endif %}

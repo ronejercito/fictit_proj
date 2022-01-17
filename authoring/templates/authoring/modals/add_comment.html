@@ -1,0 +1,18 @@
+<div>
+	<div class="mb-2 p-2">
+		{{ request.resolver_match.view_name }}
+		{% if request.resolver_match.view_name == 'author:storypage_update' %}
+		<form method="post" action="{% url 'author:comment_create' storyslug=view.kwargs.storyslug storypageslug=view.kwargs.storypageslug%}">
+			{% csrf_token %}
+			{{ addcomment_form.as_p }}
+			<input type="submit" value="Comment" class="btn btn-primary">
+		</form>
+		{% else %}
+		<form method="post" action="{% url 'author:comment_create' storyslug=view.kwargs.storyslug storypageslug=view.kwargs.storypageslug%}">
+			{% csrf_token %}
+			{{ comment_data }}
+		</form>
+		{% endif %}
+		
+	</div>
+</div>

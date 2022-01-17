@@ -1,4 +1,9 @@
-<h1>AUTHORING PLUGIN</h1>
 <div>
-	{# <a href="{% url 'author:story_create' %}">Create</a> #}
+	<h1>AUTHORING PLUGIN</h1>
+	<div>
+		{# <a href="{% url 'author:story_create' %}">Create</a> #}
+		<a href="{% url 'author:story_create' %}"><button class="btn btn-text">Start a story</button></a>
+		<a class="related-widget-wrapper-link add-related" id="add_id_story" href="/admin/authoring/story/add/?_to_field=id&amp;_popup=1" title="Add another Story"><img src="/static/admin/img/icon-addlink.svg" alt="Add"><div></div></a>
+	</div>
 </div>
+	

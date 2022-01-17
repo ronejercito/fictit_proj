@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container">
+	<h1>{{ user }}'s contact{% if object_list.length > 1%}s{% endif %}</h1>
+	{% for contact in object_list %}
+		<div class="border rounded d-flex flex-column">
+			<div class="w-2 p-2">
+				{{ contact }}
+			</div>
+			{% if story %}
+			    <div class="w-2 p-2">
+			    	<form action="{% url 'author:storyowner_create' story contact %}" method="post" accept-charset="utf-8">{% csrf_token %}
+			    		<input type="submit" class="btn btn-primary" value="Add as author">
+			    	</form>
+				</div>	
+			
+			{% endif %}
+					
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}

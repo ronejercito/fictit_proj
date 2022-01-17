@@ -3,7 +3,7 @@ from cms.plugin_pool import plugin_pool
 from cms.models.pluginmodel import CMSPlugin
 from django.utils.translation import gettext as _
 
-from integrations.models import StoryPluginModel, StoryOwnerPluginModel
+from integrations.models import StoryPluginModel, StoryOwnerPluginModel, StoryPagePluginModel
 
 
 @plugin_pool.register_plugin
@@ -29,6 +29,17 @@ class StoryOwnerPlugin(CMSPluginBase):
 	name = _('Story Owner Plugin')
 	module = _('Authoring')
 	render_template = 'authoring/plugin/storyowner_plugin.html'
+
+	def render(self, context, instance, placeholder):
+		context.update({'instance':instance})
+		return context
+
+@plugin_pool.register_plugin
+class StoryPagePlugin(CMSPluginBase):
+	model = StoryPagePluginModel
+	name = _('Story Page Plugin')
+	module = _('Authoring')
+	render_template = 'authoring/plugin/storypage_plugin.html'
 
 	def render(self, context, instance, placeholder):
 		context.update({'instance':instance})

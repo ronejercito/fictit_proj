@@ -1,0 +1,36 @@
+<div>
+	<div class="mb-2 p-2">
+	{% for storyowner in storyowners %}
+		
+			<div class="border rounded w-100 my-1">
+				<div class="d-flex flex-row col-12 p-0 m-0">
+					<a href="{% url 'profile:profile_detail' storyowner.user %}" class="col-8">
+						<div class="d-flex flex-row align-items-center w-100">
+							<div class="col-6 border bg-gray">
+								{# PROFILE PIC HERE #}
+								Profile Pic here
+							</div>
+							<div class="col-6 p-2">
+								{{ storyowner.user }}
+							</div>
+						</div>
+					</a>
+					<div class="col-4 pe-2 d-flex justify-content-end align-items-center">
+					{% if storyowner.role != 'Creator' %}
+					
+						<form action="{% url 'author:storyowner_delete' view.kwargs.storyslug storyowner.id %}" method="post" accept-charset="utf-8" class="m-0 p-0">{% csrf_token %}
+							<input type="submit" value="Remove" class="btn btn-danger">
+						</form>    
+					
+					{% else %}
+					    <div>[Creator]</div>
+					{% endif %}
+					</div>
+				</div>
+			</div>
+	{% endfor %}
+	</div>
+</div>
+<div class="modal-footer">
+	<a href="{% url 'profile:search_story' view.kwargs.storyslug %}" class="btn btn-primary">Search User</a>
+</div>

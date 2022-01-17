@@ -1,5 +1,28 @@
-<h1>Profile Detail</h1>
+{% extends "base.html" %}
 
-<p>
-	{{ object.user }}
-</p>
+
+{% block content %}
+<div class="container">
+	<h1>Profile Detail</h1>
+
+	<p>
+		{{ object.user }}
+	</p>
+
+	{% if user != object.user and not exists %}
+    <div>
+    	<a href="{% url 'profile:profileconnection_create' object.user %}" class="btn btn-primary">Connect</a>
+    </div>
+	{% endif %}
+
+	{% if exists %}
+	<div>
+    	<a href="{% url 'profile:profileconnection_delete' object.user %}" class="btn btn-danger">Unfollow</a>
+    </div>
+	{% endif %}
+</div>
+{% endblock %}
+
+{% comment "TODO" %}
+    1. If profileconnection exists, do not display connect button
+{% endcomment %}

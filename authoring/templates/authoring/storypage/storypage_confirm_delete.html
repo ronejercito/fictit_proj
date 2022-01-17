@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+
+{% block head_title %}{% page_attribute "page_title" %}{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Delete Page</h1>
+
+  <p>Are you sure you want to delete the page: {{ storypage.title }}?</p>
+
+  <form action="" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Yes, delete." class="btn btn-danger">
+  </form>
+</div>
+  
+{% endblock %}

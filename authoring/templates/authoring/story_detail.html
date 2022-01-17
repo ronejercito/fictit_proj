@@ -1,4 +1,71 @@
-<div>
-	<h1>{{ story.title }}</h1>
-	<p>Content detail here</p>
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags %}
+
+{% block head_title %}{% page_attribute "page_title" %}{% endblock %}
+{% block content %}
+<div class="container">
+	<div>
+		<h1>{{ story.title }}</h1>
+		{% if story.subtitle %}
+		    <p>{{ story.subtitle }}</p>
+		{% endif %}
+		{% if story.synopsis %}
+		    <p>{{ story.synopsis }}</p>
+		{% endif %}
+	</div>
+		
+	<div>
+		<div>
+			<a href="{{ story.get_absolute_url }}" data-modal-title="{{ story.title }}" data-modal-url="{% url 'author:story_detail_add_author' storyslug=request.resolver_match.kwargs.storyslug %}" data-toggle="modal" data-target="#authorModal">
+				<button class="btn btn-primary">Authors</button>
+			</a>
+		</div>
+	</div>
+	
+	
+	<div class="p-3 m-3 border rounded">
+		{% if storypages %}
+		<h3>Page{% if storypages|length > 1 %}s{% endif %}</h3>
+		<ul>
+			{% for page in storypages %}
+				<div class="border border-3 rounded px-3 m-1 d-flex flex-row">
+					<div class="w-75 d-flex align-items-center">{{ page }}</div>
+					<div class="w-25 text-end d-flex justify-content-end">
+						<a href="{% url 'author:storypage_detail' storyslug=view.kwargs.storyslug storypageslug=page.slug %}" class="btn btn-outline-secondary p-2 m-1">Review</a>
+						<a href="{% url 'author:storypage_update' storyslug=view.kwargs.storyslug storypageslug=page.slug %}" class="btn btn-outline-secondary p-2 m-1">Edit</a>
+						<a href="{% url 'author:storypage_delete' storyslug=request.resolver_match.kwargs.storyslug storypageslug=page.slug %}" class="btn btn-danger p-2 m-1">Delete</a>
+					</div>
+				</div>
+			{% empty %}
+				<p>No pages found.</p>
+			{% endfor %}
+		</ul>
+		{% else %}
+		    <p>No pages in story.</p>
+		{% endif %}
+		<div>
+			<a href="{% url 'author:storypage_create' storyslug=view.kwargs.storyslug %}"><button class="btn btn-text">Write a page</button></a>
+		</div>
+	</div>
+
+</div>    
+{# {% include 'tools/footer_template.html' %} #}
+{% endblock content %}
+
+{% block extra_body %}
+<div class="modal fade" id="authorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Author</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% include 'authoring/modals/add_author.html' %}
+      </div>
+    </div>
+  </div>
 </div>
+{% endblock extra_body %}

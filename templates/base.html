@@ -7,13 +7,22 @@
 		<link href="https://fonts.googleapis.com/css?family=" rel="stylesheet">
 
 		<!-- Icons -->
+		{% comment "optional note" %}
 		<link href="{% static 'css/nucleo.css' %}" rel="stylesheet">
-		<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+		<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">    
 
+		{% endcomment %}
+		
 		<!-- Theme CSS -->
 		<link type="text/css" href="{% static 'css/argon-design-system.css' %}" rel="stylesheet">
 		<link type="text/css" href="{% static 'css/fictit.css' %}" rel="stylesheet">
+		{% block extra_head %}{% endblock extra_head %}
 
+		<style type="text/css">
+			div.margin-scroll{
+				overflow: auto;
+			}
+		</style>
         {% render_block "css" %}
         {% if request.toolbar %}
 	      <style>
@@ -23,6 +32,7 @@
 	      </style>
 	    {% endif %}
     </head>
+
     <body>
     	<div class="container-fluid">
     		<div class="bg-white d-flex justify-content-end">
@@ -32,14 +42,24 @@
     				{% else %}
     					<a href="{% url 'account_login' %}"><button class="btn btn-link text-reset">Login</button></a> 
     				{% endif %}
-    				
     			</div>
     		</div>
     	</div>
+    	{% if messages %}
+            {% for message in messages %}
+            	<div class="alert {{ message.tags }} alert-dismissable fade show m-0 p-0 d-flex flex-row justify-content-between align-items-center" role="alert">
+            		<p class="m-0 p-0 px-3">{{ message }}</p>
+            		<button type="button" class="close mx-1 align-middle" data-dismiss="alert" aria-label="Close">
+            			<span>&times;</span>
+            		</button>
+            	</div>
+            {% endfor %}
+        {% endif %}
+
         {% cms_toolbar %}
         {% include 'tools/menunavbar_template.html' %}
         {% block content %}{% endblock content %}
-        
+
         {% render_block "js" %}
         <!--   Core JS Files   -->
 	    <script src="{% static 'js/core/jquery.min.js' %}" type="text/javascript"></script>
@@ -80,5 +100,7 @@
 
 	    <!-- Control Center for Argon Design System: parallax effects, scripts for the example pages etc -->
 	    <script src="{% static 'js/argon-design-system.js' %}" type="text/javascript"></script>
+
+	    {% block extra_body %}{% endblock extra_body %}
     </body>
 </html>
